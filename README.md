@@ -8,3 +8,27 @@ You should use my neovim configuration for the best experience.
 You can find it [here](https://github.com/nhktmdzhg/nvim).  
 ## Screenshots
 ![Screenshot 1](meo/screenshot.png)
+## Keyboard Shortcut
+- Super + Shift + Left: Move window to the left
+- Super + Shift + Right: Move window to the right
+- Super + Shift + Up: Move window to the top
+- Super + Shift + Down: Move window to the bottom
+- Super + (1-9): Move to desktop (1-9) (I configured only 1 desktop, if you want more, you can edit the configuration in `rc.xml`)
+- Super + Shift + (1-9): Move window to desktop (1-9) (Same as above)
+- Alt + Space: Open Context Menu
+- Alt + F4: Close window
+- Super + D: Show desktop
+- Super + F: Fullscreen
+- Super + T: Show/Hide titlebar
+- Super + X: Toggle maximize
+- Super + Z: Iconify
+- Alt + Tab: Switch window
+- Alt + Shift + Tab: Switch window in reverse
+- Super + Esc: Session menu
+- Super + R: Open rofi menu
+- PrtSc: Open spectacle
+- Ctrl + PrtSc: Select area to screenshot
+- Super + E: Open File Manager (Default: Thunar)
+- Super + L: Lock screen(Default: betterlockscreen)
+- Ctrl + Alt + T: Open terminal (Default: urxvt)
+- Ctrl + Shift + Esc: Open btop
