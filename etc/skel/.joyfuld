@@ -274,7 +274,7 @@ alias joyd_music_controller='${SCRIPTS_DIR}/music-controller.sh'
 alias joyd_screenshot_countdown='${SCRIPTS_DIR}/screenshot-countdown.sh'
 alias joyd_screenshot_screen='${SCRIPTS_DIR}/screenshot-screen.sh'
 alias joyd_screenshot_selection='${SCRIPTS_DIR}/screenshot-selection.sh'
-
+alias joyd_restart_ui='${JOYD_DIR}/restart_ui.sh'
 joyd_cross_variables()
 {
     UCTM="$(tr '[:lower:]' '[:upper:]' <<- VAR

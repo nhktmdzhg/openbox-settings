@@ -18,7 +18,7 @@ exec >/dev/null 2>&1
 
 #{ pidof -s pulseaudio -q || pulseaudio --start --log-target=syslog; } &
 
-joyd_toggle_mode apply
+joyd_restart_ui
 joyd_tray_programs exec
 
 picom --experimental-backends -b
@@ -31,7 +31,8 @@ fi
 
 { [ -x "$(command -v xss-lock)" ] && xss-lock -q -l "${JOYD_DIR}/xss-lock-tsl.sh"; } &
 
-joyd_mpd_notifier
-
 # Any additions should be added below.
+discord &
+thunderbird &
+ibus-daemon -rxRd &
 

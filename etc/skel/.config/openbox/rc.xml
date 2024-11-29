@@ -113,6 +113,9 @@
   <desktops>
     <number>1</number>
     <firstdesk>1</firstdesk>
+    <names>
+      <name>NHK</name>
+    </names>
     <!-- The number of milliseconds to show the popup for when switching desktops.
          Set this to 0 to disable the popup. -->
     <popupTime>0</popupTime>
@@ -139,7 +142,7 @@
        or when they are initially placed. Many programs reserve space automatically,
        but you can use this in other cases. -->
   <margins>
-    <top>45</top>
+    <top>40</top>
     <bottom>10</bottom>
     <left>10</left>
     <right>10</right>

@@ -11,28 +11,28 @@ export LANG='POSIX'
 exec >/dev/null 2>&1
 
 SYSINFO=''
-SCREENSHOT=''
 SESSION=''
 MEDIA=''
 MUSIC=''
+PERFORMANCE=''
 
 CUSTOM_MODI="\
 ${SYSINFO}:${0%/*}/custom-modi/modi-sysinfo.sh,\
-${SCREENSHOT}:${0%/*}/custom-modi/modi-screenshot.sh,\
 ${SESSION}:${0%/*}/custom-modi/modi-session.sh,\
 ${MEDIA}:${0%/*}/custom-modi/modi-media.sh,\
-${MUSIC}:${0%/*}/custom-modi/modi-music.sh"
+${MUSIC}:${0%/*}/custom-modi/modi-music.sh,\
+${PERFORMANCE}:${0%/*}/custom-modi/modi-performance.sh"
 
 case "${1}" in
     sys*) MODI="$SYSINFO"
-    ;;
-    scr*) MODI="$SCREENSHOT"
     ;;
     ses*) MODI="$SESSION"
     ;;
     med*) MODI="$MEDIA"
     ;;
     mus*) MODI="$MUSIC"
+    ;;
+    per*) MODI="$PERFORMANCE"
     ;;
 esac
 

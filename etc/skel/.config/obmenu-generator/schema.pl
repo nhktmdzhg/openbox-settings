@@ -53,12 +53,6 @@ our $SCHEMA = [
 
     {sep       => undef},
 
-    {beg       => [                                                                     "Screenshot",                  "$ENV{HOME}/.icons/Gladient/screenshot.png"]},
-    {item      => ["$ENV{HOME}/.scripts/screenshot-screen.sh delay",                    "Screen",                      "$ENV{HOME}/.icons/Gladient/screenshot.png"]},
-    {item      => ["$ENV{HOME}/.scripts/screenshot-selection.sh",                       "Select or Draw",              "$ENV{HOME}/.icons/Gladient/screenshot.png"]},
-    {item      => ["$ENV{HOME}/.scripts/screenshot-countdown.sh",                       "Countdown ?s",                "$ENV{HOME}/.icons/Gladient/screenshot.png"]},
-    {end       => undef},
-
     {sep       => undef},
 
     {pipe      => ["$ENV{HOME}/.config/openbox/pipe-menu/ob-randr.py",                  "Monitor Settings",            "$ENV{HOME}/.icons/Gladient/monitor-settings.png"]},
@@ -68,21 +62,8 @@ our $SCHEMA = [
 
     {sep       =>                                                                       "SESSIONS"},
 
-    {beg       => [                                                                     "Appearance",                  "$ENV{HOME}/.icons/Gladient/appearance.png"]},
-    {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/terminal-set.sh reverse", "Reverse Terminal BG/FG",      "$ENV{HOME}/.icons/Gladient/terminal-reverse-visual.png"]},
-    {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/wallpaper-set.sh",        "Change X Wallpaper",          "$ENV{HOME}/.icons/Gladient/wallpaper.png"]},
     {sep       => undef},
     {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/ob-button-set.sh",        "Change Window Button-Style",  "$ENV{HOME}/.icons/Gladient/ob-button-change.png"]},
-    {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/ob-button-set.sh swap",   "Swap Window Button-Location", "$ENV{HOME}/.icons/Gladient/ob-button-swap.png"]},
-    {sep       => undef},
-    {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/toggle-mode.sh mode",     "Toggle Mode",                 "$ENV{HOME}/.icons/Gladient/mode.png"]},
-    {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/toggle-mode.sh",          "Switch Theme",                "$ENV{HOME}/.icons/Gladient/theme.png"]},
-    {end       => undef},
-
-    {sep       => undef},
-
-    {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/toggle-mode.sh apply",    "Restart UI",                  "$ENV{HOME}/.icons/Gladient/restart-ui.png"]},
-
     {sep       => undef},
 
     {item      => ["betterlockscreen -l blur",                           "Lock",                        "$ENV{HOME}/.icons/Gladient/lock.png"]},
