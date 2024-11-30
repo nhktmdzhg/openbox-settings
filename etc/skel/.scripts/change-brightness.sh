@@ -12,10 +12,6 @@ export LANG='POSIX'
 exec >/dev/null 2>&1
 . "${HOME}/.joyfuld"
 
-[ -x "$(command -v brightnessctl)" ] || exec dunstify 'Install `brightnessctl`!' -h string:synchronous:install-deps \
-                                                                                 -a joyful_desktop \
-                                                                                 -u low
-
 case "${1}" in
     +) brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} set "${BRIGHTNESS_STEPS:-5}%+" -q
     ;;
@@ -24,7 +20,9 @@ case "${1}" in
 esac
 
 {
-    BRIGHTNESS="$(brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} get -P)"
+    BRIGHTNESS_VALUE="$(brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} get)"
+    MAX_BRIGHTNESS="$(brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} max)"
+    BRIGHTNESS=$(( BRIGHTNESS_VALUE * 100 / MAX_BRIGHTNESS ))
 
     if [ "$BRIGHTNESS" -eq 0 ]; then
         ICON='notification-display-brightness-off'

@@ -27,15 +27,15 @@ F_='' F="<span font_desc='${ROW_ICON_FONT}' weight='bold'>${F_}</span>   Brig
 G_='' G="<span font_desc='${ROW_ICON_FONT}' weight='bold'>${G_}</span>   Dim ${BRIGHTNESS_STEPS}%"
 
 case "${@}" in
-    "$B") amixer ${AUDIO_DEVICE:+-D "$AUDIO_DEVICE"} sset Master "${AUDIO_VOLUME_STEPS:-5}%+" on -q
+    "$B") ~/.scripts/change-volume.sh +
     ;;
-    "$C") amixer ${AUDIO_DEVICE:+-D "$AUDIO_DEVICE"} sset Master "${AUDIO_VOLUME_STEPS:-5}%-" on -q
+    "$C") ~/.scripts/change-volume.sh -
     ;;
-    "$D") amixer ${AUDIO_DEVICE:+-D "$AUDIO_DEVICE"} sset Master 1+ toggle -q
+    "$D") ~/.scripts/change-volume.sh 0
     ;;
-    "$F") brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} set "${BRIGHTNESS_STEPS:-5}%+" -q
+    "$F") ~/.scripts/change-brightness.sh +
     ;;
-    "$G") brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} set "${BRIGHTNESS_STEPS:-5}%-" -q
+    "$G") ~/.scripts/change-brightness.sh -
     ;;
 esac
 
@@ -44,8 +44,9 @@ AUDIO_MUTED="${AUDIO_VOLUME##*\ \[on\]}"
 AUDIO_VOLUME="${AUDIO_VOLUME#*\ \[}" \
 AUDIO_VOLUME="${AUDIO_VOLUME%%\%\]\ *}"
 
-BRIGHTNESS="$(brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} get -P)"
-
+BRIGHTNESS_VALUE="$(brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} get)"
+MAX_BRIGHTNESS="$(brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} max)"
+BRIGHTNESS=$(( BRIGHTNESS_VALUE * 100 / MAX_BRIGHTNESS ))
 if [ "$AUDIO_VOLUME" -eq 0 -o -n "$AUDIO_MUTED" ]; then
     [ -z "$AUDIO_MUTED" ] || MUTED='---'
     A_=''
