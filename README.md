@@ -28,7 +28,7 @@ Maybe in this repo I forgot to add some neccessary files, so if you find any mis
 - Alt + Shift + Tab: Switch window in reverse
 - Super + Esc: Session menu
 - Super + R: Open rofi menu
-- PrtSc: Open spectacle
+- PrtSc: Open flameshot
 - Ctrl + PrtSc: Select area to screenshot
 - Super + E: Open File Manager (Default: Thunar)
 - Super + L: Lock screen (Default: betterlockscreen)
