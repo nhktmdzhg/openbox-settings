@@ -49,7 +49,7 @@
          C: close
          S: shade (roll up/down)
          D: omnipresent (on all desktops) -->
-    <titleLayout>CIML</titleLayout>
+    <titleLayout>CIMLSN</titleLayout>
     <keepBorder>yes</keepBorder>
     <animateIconify>yes</animateIconify>
     <font place="ActiveWindow">
@@ -472,7 +472,7 @@
     </keybind>
     <keybind key="C-A-t">
       <action name="Execute">
-        <command>~/.scripts/launch-apps.sh terminal</command>
+        <command>~/.scripts/terminal.sh</command>
       </action>
     </keybind>
     <!--<keybind key="W-S-Return">-->

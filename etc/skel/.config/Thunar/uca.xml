@@ -1,15 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <actions>
-  <action>
-    <icon>utilities-terminal</icon>
-    <name>Open Terminal Here</name>
-    <submenu></submenu>
-    <unique-id>1613914055840245-1</unique-id>
-    <command>sh -c &quot;cd %F; ~/.scripts/launch-apps.sh terminal&quot;</command>
-    <description>Open Terminal Emulator from current directory</description>
-    <patterns>*</patterns>
-    <startup-notify/>
-    <directories/>
-  </action>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<submenu></submenu>
+	<unique-id>1613914055840245-1</unique-id>
+	<command>sh -c &quot;cd %F; ~/.scripts/terminal.sh&quot;</command>
+	<description>Open Terminal Emulator from current directory</description>
+	<range></range>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>krusader_root</icon>
+	<name>Open with superuser</name>
+	<submenu></submenu>
+	<unique-id>1733028816668117-1</unique-id>
+	<command>gksu thunar %f</command>
+	<description>Open this folder with sudo priviledge</description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>neovide</icon>
+	<name>Open Neovide here</name>
+	<submenu></submenu>
+	<unique-id>1733246129150121-1</unique-id>
+	<command>sh -c &quot;cd %F; neovide --size=1900x988&quot;</command>
+	<description>Open Neovide in this folder</description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>code</icon>
+	<name>Open VSCode here</name>
+	<submenu></submenu>
+	<unique-id>1733246240288233-2</unique-id>
+	<command>sh -c &quot;cd %F; code .&quot;</command>
+	<description>Open VSCode in this folder</description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
 </actions>

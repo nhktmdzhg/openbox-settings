@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-spectacle -r
+flameshot gui

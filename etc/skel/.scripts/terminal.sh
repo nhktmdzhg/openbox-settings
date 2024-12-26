@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-urxvt
+XMODIFIERS= urxvtc

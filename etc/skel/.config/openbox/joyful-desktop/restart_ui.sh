@@ -4,9 +4,11 @@ export LANG='POSIX'
 exec >/dev/null 2>&1
 . "${HOME}/.joyfuld"
 
+killall -q dunst
+killall -q tint2
 openbox --reconfigure &
-dunst -config "${DUNST_DIR}/mechanical.interactive.dunstrc" &
+dunst &
+tint2 &
 joyd_terminal_set &
 nitrogen --restore &
-tint2 -c "${TINT2_DIR}/mechanical-top.interactive.tint2rc" &
 

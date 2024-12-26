@@ -1,13 +1,5 @@
 #!/usr/bin/env sh
 
-# Desc:   Display brightness changer via `brightnessctl`.
-# Author: Harry Kurn <alternate-se7en@pm.me>
-# URL:    https://github.com/owl4ce/dotfiles/tree/ng/.scripts/change-brightness.sh
-
-# SPDX-License-Identifier: ISC
-
-# shellcheck disable=SC2016
-
 export LANG='POSIX'
 exec >/dev/null 2>&1
 . "${HOME}/.joyfuld"
@@ -24,16 +16,12 @@ esac
     MAX_BRIGHTNESS="$(brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} max)"
     BRIGHTNESS=$(( BRIGHTNESS_VALUE * 100 / MAX_BRIGHTNESS ))
 
-    if [ "$BRIGHTNESS" -eq 0 ]; then
-        ICON='notification-display-brightness-off'
-    elif [ "$BRIGHTNESS" -lt 10 ]; then
-        ICON='notification-display-brightness-low'
+    if [ "$BRIGHTNESS" -lt 10 ]; then
+        ICON='display-brightness-low'
     elif [ "$BRIGHTNESS" -lt 70 ]; then
-        ICON='notification-display-brightness-medium'
-    elif [ "$BRIGHTNESS" -lt 100 ]; then
-        ICON='notification-display-brightness-high'
+        ICON='display-brightness-medium'
     else
-        ICON='notification-display-brightness-full'
+        ICON='display-brightness-high'
     fi
 
     exec dunstify "$BRIGHTNESS" -h "int:value:${BRIGHTNESS}" \

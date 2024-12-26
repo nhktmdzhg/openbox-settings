@@ -1,11 +1,5 @@
 #!/usr/bin/env sh
 
-# Desc:   Run rofi-extensions menu with custom modi.
-# Author: Harry Kurn <alternate-se7en@pm.me>
-# URL:    https://github.com/owl4ce/dotfiles/tree/ng/.config/rofi/scripts/rofi-exts.sh
-
-# SPDX-License-Identifier: ISC
-
 SYSTEM_LANG="$LANG"
 export LANG='POSIX'
 exec >/dev/null 2>&1
@@ -20,7 +14,6 @@ CUSTOM_MODI="\
 ${SYSINFO}:${0%/*}/custom-modi/modi-sysinfo.sh,\
 ${SESSION}:${0%/*}/custom-modi/modi-session.sh,\
 ${MEDIA}:${0%/*}/custom-modi/modi-media.sh,\
-${MUSIC}:${0%/*}/custom-modi/modi-music.sh,\
 ${PERFORMANCE}:${0%/*}/custom-modi/modi-performance.sh"
 
 case "${1}" in
@@ -29,8 +22,6 @@ case "${1}" in
     ses*) MODI="$SESSION"
     ;;
     med*) MODI="$MEDIA"
-    ;;
-    mus*) MODI="$MUSIC"
     ;;
     per*) MODI="$PERFORMANCE"
     ;;

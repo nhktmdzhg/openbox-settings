@@ -1,8 +1,5 @@
 #!/usr/bin/env perl
 
-# obmenu-generator - schema file
-# https://github.com/owl4ce/dotfiles
-
 =for comment
 
     item:      add an item inside the menu               {item => ["command", "label", "icon"]},
@@ -61,6 +58,10 @@ our $SCHEMA = [
     {sep       => undef},
 
     {sep       =>                                                                       "SESSIONS"},
+
+    {sep       => undef},
+    {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/restart_ui.sh",           "Restart UI",                   "$ENV{HOME}/.icons/Gladient/restart-ui.png"]},
+    {sep       => undef},
 
     {sep       => undef},
     {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/ob-button-set.sh",        "Change Window Button-Style",  "$ENV{HOME}/.icons/Gladient/ob-button-change.png"]},

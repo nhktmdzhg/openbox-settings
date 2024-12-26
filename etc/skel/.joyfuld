@@ -136,7 +136,7 @@ SS_COUNTDOWN_SECONDS='5'                         # Countdown timer or delay mode
 # BRIGHTNESS_STEPS      || 0-100, this is percentage of value with specific range. #
 #-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~--~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-#
 
-AUDIO_DEVICE='pulse'
+AUDIO_DEVICE='pipewire'
 AUDIO_VOLUME_STEPS='5'
 
 BRIGHTNESS_DEVICE=''

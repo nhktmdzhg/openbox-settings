@@ -1,9 +1,5 @@
 #!/usr/bin/perl
 
-# obmenu-generator - configuration file
-# This file will be updated automatically.
-# Any additional comment and/or indentation will be lost.
-
 =for comment
 
 || FILTERING

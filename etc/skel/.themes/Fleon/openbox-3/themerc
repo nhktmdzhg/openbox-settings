@@ -8,14 +8,14 @@ padding.height: 7
 window.active.title.bg: flat
 window.active.title.bg.color: #373e4d
 window.inactive.title.bg: flat
-window.inactive.title.bg.color: #373e4d
+window.inactive.title.bg.color: #2c313c
 
 ## Titlebar Text
 window.label.text.justify: center
 window.active.label.bg: parentrelative
-window.active.label.text.color: #373e4d
+window.active.label.text.color: #c8c1b2
 window.inactive.label.bg: parentrelative
-window.inactive.label.text.color: #373e4d
+window.inactive.label.text.color: #d3cec3
 
 ## Borders
 border.width: 0

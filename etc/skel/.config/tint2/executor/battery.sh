@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-# Desc:   Get status of battery and print icon that is charged or not
-
 export LANG='POSIX'
 exec 2>/dev/null
 . "${HOME}/.joyfuld"
@@ -33,7 +31,6 @@ else
     BATTERRY_ICON="${ICON_BATTERY_CHARGING}"
 fi
 
-# print icon only
 echo "${BATTERRY_ICON}"
-
 exit ${?}
+
