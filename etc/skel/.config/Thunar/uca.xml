@@ -17,7 +17,7 @@
 	<name>Open with superuser</name>
 	<submenu></submenu>
 	<unique-id>1733028816668117-1</unique-id>
-	<command>gksu thunar %f</command>
+	<command>pkexec thunar %f</command>
 	<description>Open this folder with sudo priviledge</description>
 	<range>*</range>
 	<patterns>*</patterns>
