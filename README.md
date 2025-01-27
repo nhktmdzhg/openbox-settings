@@ -32,6 +32,6 @@ Maybe in this repo I forgot to add some neccessary files, so if you find any mis
 - Ctrl + PrtSc: Select area to screenshot
 - Super + E: Open File Manager (Default: Thunar)
 - Super + L: Lock screen (Default: betterlockscreen)
-- Ctrl + Alt + T: Open terminal (Default: urxvt)
+- Ctrl + Alt + T: Open terminal (Default: Alacritty)
 - Ctrl + Shift + Esc: Open btop
 
