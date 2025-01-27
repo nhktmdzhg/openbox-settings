@@ -13,6 +13,8 @@ def get_curr_playing():
         curr_song = result.stdout.decode('utf-8').strip()
         # remove extension of song
         curr_song = os.path.splitext(curr_song)[0]
+        if curr_song == '-':
+            return "No playing"
         length = len(curr_song)
         if length < 20:
             return curr_song
