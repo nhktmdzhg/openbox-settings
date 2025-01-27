@@ -9,7 +9,7 @@ You can find it [here](https://github.com/nhktmdzhg/nvim).
 In my config, I also use the Kurinto font in many places. This is a very good font, covering many languages and has a lot of glyphs. You can download it [here](https://www.kurinto.com/download.htm).  
 Maybe in this repo I forgot to add some neccessary files, so if you find any missing files, please put it on the issues tab, I will push the new commit as soon as possible.
 ## My Screenshots
-<!-- ![Screenshot 1](meo/screenshot.png) -->
+![Screenshot 1](meo/screenshot.png)
 ## Keyboard Shortcut
 - Super + Shift + Left: Move window to the left
 - Super + Shift + Right: Move window to the right
