@@ -23,8 +23,10 @@ elif [ "$AUDIO_VOLUME" -lt 30 ]; then
     ICON=''
 elif [ "$AUDIO_VOLUME" -lt 70 ]; then
     ICON=''
-else
+elif [ "$AUDIO_VOLUME" -le 150 ]; then
     ICON=''
+else
+    pactl set-sink-volume "${AUDIO_DEVICE}" 150%
 fi
 
 case "${1}" in

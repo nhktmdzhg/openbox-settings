@@ -21,12 +21,12 @@ fi
 
 xss-lock -q -l "${JOYD_DIR}/xss-lock-tsl.sh" &
 
-# Autostart app, below is my app, you can change by yourself
+# Autostart app, below is an example
+# powerprofilesctl set performance &
 # discord &
 # thunderbird &
-xfce4-power-manager &
 # mcontrolcenter &
-flameshot &
+# flameshot &
 # bottles-cli run -p Zalo -b 'Zalo' -- %u &
 # bottles-cli run -p Unikey -b 'Zalo' -- %u &
 

@@ -27,49 +27,26 @@ my $editor = $CONFIG->{editor};
 
 our $SCHEMA = [
     {sep       => "MENU"},
-
     #              COMMAND                                                              LABEL                          ICON
     {beg       => [                                                                     "Applications",                 "$ENV{HOME}/.icons/Gladient/find.png"]},
-    {cat       => ["utility",                                                           "Accessories",                 "applications-utilities"]},
-    {cat       => ["development",                                                       "Development",                 "applications-development"]},
-    {cat       => ["education",                                                         "Education",                   "applications-science"]},
-    {cat       => ["game",                                                              "Games",                       "applications-games"]},
-    {cat       => ["graphics",                                                          "Graphics",                    "applications-graphics"]},
-    {cat       => ["audiovideo",                                                        "Multimedia",                  "applications-multimedia"]},
-    {cat       => ["network",                                                           "Network",                     "applications-internet"]},
-    {cat       => ["office",                                                            "Office",                      "applications-office"]},
-    {cat       => ["other",                                                             "Other",                       "applications-other"]},
-    {cat       => ["settings",                                                          "Settings",                    "applications-accessories"]},
-    {cat       => ["system",                                                            "System",                      "applications-system"]},
+    {cat       => ["utility",                                                           "Accessories",                  "applications-utilities"]},
+    {cat       => ["development",                                                       "Development",                  "applications-development"]},
+    {cat       => ["education",                                                         "Education",                    "applications-science"]},
+    {cat       => ["game",                                                              "Games",                        "applications-games"]},
+    {cat       => ["graphics",                                                          "Graphics",                     "applications-graphics"]},
+    {cat       => ["audiovideo",                                                        "Multimedia",                   "applications-multimedia"]},
+    {cat       => ["network",                                                           "Network",                      "applications-internet"]},
+    {cat       => ["office",                                                            "Office",                       "applications-office"]},
+    {cat       => ["other",                                                             "Other",                        "applications-other"]},
+    {cat       => ["settings",                                                          "Settings",                     "applications-accessories"]},
+    {cat       => ["system",                                                            "System",                       "applications-system"]},
     {end       => undef},
-
-    {sep       => undef},
-
-    {item      => ["$ENV{HOME}/.scripts/launch-apps.sh terminal",                       "Terminal",               "$ENV{HOME}/.icons/Gladient/terminal.png"]},
-    {item      => ["$ENV{HOME}/.scripts/launch-apps.sh file_manager",                   "File Manager",           "$ENV{HOME}/.icons/Gladient/file-manager.png"]},
-
-    {sep       => undef},
-
-    {sep       => undef},
-
-    {pipe      => ["$ENV{HOME}/.config/openbox/pipe-menu/ob-randr.py",                  "Monitor Settings",            "$ENV{HOME}/.icons/Gladient/monitor-settings.png"]},
-    {obgenmenu => [                                                                     "Advanced Settings",           "$ENV{HOME}/.icons/Gladient/advanced-settings.png"]},
-
-    {sep       => undef},
-
+    {item      => ["$ENV{HOME}/.scripts/launch-apps.sh terminal",                       "Terminal",                     "$ENV{HOME}/.icons/Gladient/terminal.png"]},
+    {item      => ["$ENV{HOME}/.scripts/launch-apps.sh file_manager",                   "File Manager",                 "$ENV{HOME}/.icons/Gladient/file-manager.png"]},
+    {item      => ["arandr",                                                            "Multi Monitor Settings",       "$ENV{HOME}/.icons/Gladient/monitor-settings.png"]},
     {sep       =>                                                                       "SESSIONS"},
-
-    {sep       => undef},
     {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/restart_ui.sh",           "Restart UI",                   "$ENV{HOME}/.icons/Gladient/restart-ui.png"]},
-    {sep       => undef},
-
-    {sep       => undef},
-    {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/ob-button-set.sh",        "Change Window Button-Style",  "$ENV{HOME}/.icons/Gladient/ob-button-change.png"]},
-    {sep       => undef},
-
-    {item      => ["betterlockscreen -l blur",                           "Lock",                        "$ENV{HOME}/.icons/Gladient/lock.png"]},
-
-    {sep       => undef},
-
-    {exit      => [                                                                     "Exit Openbox",                "$ENV{HOME}/.icons/Gladient/logout.png"]},
+    {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/ob-button-set.sh",        "Change Window Button-Style",   "$ENV{HOME}/.icons/Gladient/ob-button-change.png"]},
+    {item      => ["betterlockscreen -l blur",                                          "Lock",                         "$ENV{HOME}/.icons/Gladient/lock.png"]},
+    {exit      => [                                                                     "Exit Openbox",                 "$ENV{HOME}/.icons/Gladient/logout.png"]},
 ]

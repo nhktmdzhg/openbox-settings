@@ -3,25 +3,23 @@
 export LANG='POSIX'
 exec 2>/dev/null
 
+# check the current windows is fullscreen or not, if is fullscreen, then turn off the notification
+IS_FULLSCREEN="$(xprop -id "$(xdotool getactivewindow)" _NET_WM_STATE | grep -c _NET_WM_STATE_FULLSCREEN)"
+
+if [ "${IS_FULLSCREEN}" -eq 1 ]; then
+    dunstctl set-paused true
+else
+    dunstctl set-paused false
+fi
+
 NOTIFICATION_STATUS="$(dunstctl is-paused)"
 NOTIFICATION_ICON=''
 NOTIFICATION_ICON_PAUSED=''
 if [ "${NOTIFICATION_STATUS}" = 'true' ]; then
     ICON="${NOTIFICATION_ICON_PAUSED}"
-    MESSAGE='Notifications are enabled'
 else
     ICON="${NOTIFICATION_ICON}"
-    MESSAGE='Notifications are disabled'
 fi
-case "${1}" in
-    i*)
-        echo "${ICON}"
-        ;;
-    t*)
-        notify-send -i ~/.local/share/icons/BeautyLine/apps/scalable/preferences-desktop-notification.svg "${MESSAGE}"
-        sleep 1
-        dunstctl set-paused toggle
-        ;;
-esac
+echo "${ICON}"
 exit ${?}
 

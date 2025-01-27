@@ -385,7 +385,7 @@
     <keybind key="W-z">
       <action name="Iconify"/>
     </keybind>
-    <!-- Switch active windows. -->
+     <!--Switch active windows. -->
     <keybind key="A-Tab">
       <action name="NextWindow">
         <bar>no</bar>
@@ -488,7 +488,7 @@
     <!--Task manager btop-->
     <keybind key="C-S-Escape">
       <action name="Execute">
-        <command>urxvt -e btop</command>
+        <command>alacritty -e btop</command>
       </action>
     </keybind>
   </keyboard>

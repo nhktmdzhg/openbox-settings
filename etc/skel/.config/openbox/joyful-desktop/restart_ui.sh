@@ -9,6 +9,5 @@ killall -q tint2
 openbox --reconfigure &
 dunst &
 tint2 &
-joyd_terminal_set &
 nitrogen --restore &
 

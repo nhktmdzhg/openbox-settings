@@ -216,7 +216,7 @@ border_color_pressed = #f9f9f9 78
 
 #-------------------------------------
 # Panel
-panel_items = :PPP:S:L:E:T:E:B:E:E:E:E:P:E:P:C:PPP:
+panel_items = :PPP:S:L:E:T:E:E:B:E:E:E:E:P:E:P:C:PPP:
 panel_size = 100% 30
 panel_margin = 5 5
 panel_padding = 0 0 0
@@ -291,7 +291,7 @@ mouse_scroll_down = prev_task
 # System tray (notification area)
 systray_padding = 6 0 6
 systray_background_id = 2
-systray_sort = left2right
+systray_sort = ascending
 systray_icon_size = 16
 systray_icon_asb = 100 0 10
 systray_monitor = 1
@@ -332,8 +332,8 @@ battery_rclick_command =
 battery_mclick_command = 
 battery_uwheel_command = 
 battery_dwheel_command = 
-ac_connected_cmd = notify-send -i ~/.local/share/icons/BeautyLine/devices/scalable/ac-adapter.svg 'AC Connected'
-ac_disconnected_cmd = notify-send -i ~/.local/share/icons/BeautyLine/devices/scalable/battery.svg 'AC disconnected'
+ac_connected_cmd = notify-send -i ~/.local/share/icons/BeautyLine/devices/scalable/ac-adapter.svg 'AC Connected' && powerprofilesctl set performance
+ac_disconnected_cmd = notify-send -i ~/.local/share/icons/BeautyLine/devices/scalable/battery.svg 'AC disconnected' && powerprofilesctl set power-saver
 
 #-------------------------------------
 # Separator 1
@@ -488,17 +488,27 @@ separator_style = empty
 separator_size = 6
 separator_padding = 0 0
 
+
+#-------------------------------------
+# Separator 18
+separator = new
+separator_background_id = 0
+separator_color = #f9f9f9 0
+separator_style = empty
+separator_size = 6
+separator_padding = 0 0
+
 #-------------------------------------
 # Executor 1
 execp = new
-execp_command = ~/.config/tint2/executor/notification.sh icon
+execp_command = ~/.config/tint2/executor/notification.sh
 execp_interval = 1
 execp_has_icon = 0
 execp_cache_icon = 0
 execp_continuous = 0
 execp_markup = 0
 execp_tooltip = Notification Status
-execp_lclick_command = ~/.config/tint2/executor/notification.sh toggle
+execp_lclick_command =
 execp_rclick_command = 
 execp_mclick_command = 
 execp_uwheel_command = 
@@ -513,6 +523,29 @@ execp_icon_h = 0
 
 #-------------------------------------
 # Executor 2
+execp = new
+execp_command = ~/.config/tint2/executor/curr_playing
+execp_interval = 1
+execp_has_icon = 0
+execp_cache_icon = 0
+execp_continuous = 0
+execp_markup = 0
+execp_tooltip = Current Playing
+execp_lclick_command =  
+execp_rclick_command = 
+execp_mclick_command = 
+execp_uwheel_command = 
+execp_dwheel_command = 
+execp_font = Kurinto Mono JP 8.5
+execp_font_color = #f9f9f9 100
+execp_padding = 5 0
+execp_background_id = 2
+execp_centered = 1
+execp_icon_w = 0
+execp_icon_h = 0
+
+#-------------------------------------
+# Executor 3
 execp = new
 execp_command = ~/.config/tint2/executor/battery.sh
 execp_interval = 1
@@ -535,7 +568,7 @@ execp_icon_w = 0
 execp_icon_h = 0
 
 #-------------------------------------
-# Executor 3
+# Executor 4
 execp = new
 execp_command = ~/.config/tint2/executor/network.sh icon
 execp_interval = 1
@@ -558,7 +591,7 @@ execp_icon_w = 0
 execp_icon_h = 0
 
 #-------------------------------------
-# Executor 4
+# Executor 5
 execp = new
 execp_command = ~/.config/tint2/executor/network.sh status
 execp_interval = 1
@@ -581,7 +614,7 @@ execp_icon_w = 0
 execp_icon_h = 0
 
 #-------------------------------------
-# Executor 5
+# Executor 6
 execp = new
 execp_command = ~/.config/tint2/executor/volume.sh icon
 execp_interval = 1
@@ -604,7 +637,7 @@ execp_icon_w = 0
 execp_icon_h = 0
 
 #-------------------------------------
-# Executor 6
+# Executor 7
 execp = new
 execp_command = ~/.config/tint2/executor/volume.sh percent
 execp_interval = 1
@@ -627,7 +660,7 @@ execp_icon_w = 0
 execp_icon_h = 0
 
 #-------------------------------------
-# Executor 7
+# Executor 8
 execp = new
 execp_command = date +"%Y年%m月%d日"
 execp_interval = 1
@@ -753,8 +786,8 @@ button_max_icon_size = 0
 button = new
 button_text = 
 button_tooltip = [L] Show Desktop [R] Session Menu
-button_lclick_command = wmctrl -k on
-button_rclick_command = ~/.config/rofi/scripts/rofi-exts.sh session
+button_lclick_command = ~/.config/rofi/scripts/rofi-exts.sh session
+button_rclick_command = ~/.config/rofi/scripts/rofi-exts.sh media
 button_mclick_command = 
 button_uwheel_command = 
 button_dwheel_command = 

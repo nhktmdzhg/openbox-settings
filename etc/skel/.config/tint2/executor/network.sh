@@ -8,7 +8,6 @@ exec 2>/dev/null
 
 GET_ET="$(ip addr show "${IFACE_ET}")"
 IP_ET="$(echo "${GET_ET}" | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1)"
-GET_WL="$(iwgetid "${IFACE_WL}")"
 ESSID="$(iwgetid -r)"
 if [ -n "$IP_ET" ]; then
     ICON=''
