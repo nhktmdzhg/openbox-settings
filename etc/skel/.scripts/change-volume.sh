@@ -4,7 +4,24 @@ export LANG='POSIX'
 exec >/dev/null 2>&1
 . "${HOME}/.joyfuld"
 
-AUDIO_DEVICE="$(pactl list sinks | grep -B1 -A9 State: | grep 'Name: ' | cut -d' ' -f2)"
+AUDIO_DEVICE=$(pactl list sinks | awk '
+    BEGIN { bluetooth_sink = ""; default_sink = "" }
+    /Name:/ {
+        sink_name = $2
+        if (index(sink_name, "bluez") > 0) {
+            bluetooth_sink = sink_name
+        } else if (default_sink == "") {
+            default_sink = sink_name
+        }
+    }
+    END {
+        if (bluetooth_sink != "") {
+            print bluetooth_sink
+        } else {
+            print default_sink
+        }
+    }'
+)
 case "${1}" in
     +) pactl set-sink-volume "${AUDIO_DEVICE}" +5%
     ;;

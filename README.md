@@ -2,11 +2,11 @@
 This is my personal Openbox configuration. It is a work in progress and will be updated as I continue to tweak it.  
 Before you use this configuration, please make sure you have the following packages installed (for example in Arch-based distributions):
 ```bash
-sudo pacman -S openbox betterlockscreen btop dunst fastfetch kvantum-qt5 obmenu-generator rofi thunar tint2 xfce4-power-manager flameshot nitrogen nm-applet picom perl-gtk3 alsa-utils brightnessctl wireless_tools xclip xsettingsd xss-lock thunar-archive-plugin thunar-volman gsimplecal pavucontrol polkit-gnome nvim neovide power-profiles-daemon upower alacritty python rhythmbox
+sudo pacman -S openbox betterlockscreen btop dunst fastfetch kvantum-qt5 obmenu-generator rofi thunar tint2 xfce4-power-manager flameshot nitrogen nm-applet picom perl-gtk3 alsa-utils brightnessctl wireless_tools xclip xsettingsd xss-lock thunar-archive-plugin thunar-volman gsimplecal pavucontrol polkit-gnome nvim neovide power-profiles-daemon upower alacritty python rhythmbox bluez bluez-utils
 ```
 You should use my neovim configuration for the best experience.  
 You can find it [here](https://github.com/nhktmdzhg/nvim).  
-In my config, I also use the Kurinto font in many places. This is a very good font, covering many languages and has a lot of glyphs. You can download it [here](https://www.kurinto.com/download.htm).  
+In my config, I also use the Kurinto font in many places. This is a very good font, covering many languages and has a lot of glyphs. You can download it [here](https://www.kurinto.com/download.htm). I don't include it in this repo because it is not open source and It's very large (>1GB).  
 Maybe in this repo I forgot to add some neccessary files, so if you find any missing files, please put it on the issues tab, I will push the new commit as soon as possible.
 ## My Screenshots
 ![Screenshot 1](meo/screenshot.png)
