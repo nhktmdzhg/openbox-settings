@@ -1,4 +1,0 @@
-terminal          "urxvtc"
-music_player      "mpd"
-file_manager      "thunar"
-session_locker    "betterlockscreen -l blur"

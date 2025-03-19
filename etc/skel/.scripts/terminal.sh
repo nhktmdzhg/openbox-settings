@@ -1,2 +1,3 @@
 #!/usr/bin/env sh
-XMODIFIERS= urxvtc
+XMODIFIERS= alacritty
+

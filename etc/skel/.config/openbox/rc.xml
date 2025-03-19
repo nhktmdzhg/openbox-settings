@@ -215,6 +215,11 @@
         <command>~/.scripts/music-controller.sh toggle</command>
       </action>
     </keybind>
+    <keybind key="XF86AudioPause">
+      <action name="Execute">
+        <command>~/.scripts/music-controller.sh toggle</command>
+      </action>
+    </keybind>
     <!-- Move window-focus across visible windows. -->
     <keybind key="W-Left">
       <action name="DirectionalCycleWindows">
@@ -371,11 +376,6 @@
     <keybind key="W-f">
       <action name="ToggleFullscreen"/>
     </keybind>
-    <!--<keybind key="W-space">-->
-    <!--  <action name="ShowMenu">-->
-    <!--    <menu>root-menu</menu>-->
-    <!--  </action>-->
-    <!--</keybind>-->
     <keybind key="W-t">
       <action name="ToggleDecorations"/>
     </keybind>
@@ -412,11 +412,6 @@
         <command>~/.config/rofi/scripts/rofi-exts.sh session</command>
       </action>
     </keybind>
-    <keybind key="W-Print">
-      <action name="Execute">
-        <command>~/.config/rofi/scripts/rofi-exts.sh screenshot</command>
-      </action>
-    </keybind>
     <keybind key="W-r">
       <action name="Execute">
         <command>~/.config/rofi/scripts/rofi-main.sh</command>
@@ -433,36 +428,10 @@
         <command>~/.scripts/screenshot-selection.sh</command>
       </action>
     </keybind>
-    <!--<keybind key="S-Print">-->
-    <!--  <action name="Execute">-->
-    <!--    <command>~/.scripts/screenshot-selection.sh</command>-->
-    <!--  </action>-->
-    <!--</keybind>-->
-    <!-- Dunst-specifics. -->
-    <!--<keybind key="C-Escape">-->
-    <!--  <action name="Execute">-->
-    <!--    <command>dunstctl history-pop</command>-->
-    <!--  </action>-->
-    <!--</keybind>-->
-    <!--<keybind key="C-Return">-->
-    <!--  <action name="Execute">-->
-    <!--    <command>dunstctl context</command>-->
-    <!--  </action>-->
-    <!--</keybind>-->
-    <!--<keybind key="C-space">-->
-    <!--  <action name="Execute">-->
-    <!--    <command>dunstctl close</command>-->
-    <!--  </action>-->
-    <!--</keybind>-->
-    <!--<keybind key="C-S-space">-->
-    <!--  <action name="Execute">-->
-    <!--    <command>dunstctl close-all</command>-->
-    <!--  </action>-->
-    <!--</keybind>-->
     <!-- Misc. -->
     <keybind key="W-e">
       <action name="Execute">
-        <command>~/.scripts/launch-apps.sh file_manager</command>
+        <command>thunar</command>
       </action>
     </keybind>
     <keybind key="W-l">
@@ -475,20 +444,9 @@
         <command>~/.scripts/terminal.sh</command>
       </action>
     </keybind>
-    <!--<keybind key="W-S-Return">-->
-    <!--  <action name="Execute">-->
-    <!--    <command>~/.config/openbox/joyful-desktop/terminal-set.sh reverse</command>-->
-    <!--  </action>-->
-    <!--</keybind>-->
-    <!--<keybind key="W-S-r">-->
-    <!--  <action name="Execute">-->
-    <!--    <command>~/.config/openbox/joyful-desktop/toggle-mode.sh apply</command>-->
-    <!--  </action>-->
-    <!--</keybind>-->
-    <!--Task manager btop-->
     <keybind key="C-S-Escape">
       <action name="Execute">
-        <command>alacritty -e btop</command>
+        <command>~/.scripts/btop.sh</command>
       </action>
     </keybind>
   </keyboard>

@@ -41,3 +41,4 @@ exec rofi -theme-str '@import "exts.rasi"' \
           -show "${MODI:-${SYSINFO}}"
 
 exit ${?}
+

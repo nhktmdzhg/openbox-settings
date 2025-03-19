@@ -2,7 +2,6 @@
 
 export LANG='POSIX'
 exec >/dev/null 2>&1
-. "${HOME}/.joyfuld"
 
 # Check if the music controller is already running
 IS_RUNNING=$(rhythmbox-client --check-running)

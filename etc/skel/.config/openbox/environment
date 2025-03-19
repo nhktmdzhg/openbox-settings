@@ -2,4 +2,7 @@ export QT_STYLE_OVERRIDE=kvantum
 export QT_QPA_PLATFORMTHEME=kvantum
 export LESSHISTFILE='/dev/null'
 export GTK_THEME=Skeuos-Blue-Dark
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
 

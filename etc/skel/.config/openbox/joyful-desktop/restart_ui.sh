@@ -2,7 +2,6 @@
 SYSTEM_LANG="$LANG"
 export LANG='POSIX'
 exec >/dev/null 2>&1
-. "${HOME}/.joyfuld"
 
 killall -q dunst
 killall -q tint2

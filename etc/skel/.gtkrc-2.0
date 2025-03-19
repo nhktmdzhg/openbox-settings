@@ -2,7 +2,7 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/iamnanoka/.gtkrc-2.0.mine"
-gtk-theme-name="Fleon"
+gtk-theme-name="Nordic-darker"
 gtk-icon-theme-name="BeautyLine"
 gtk-font-name="Cantarell 9"
 gtk-cursor-theme-name="March-7th"

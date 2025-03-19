@@ -2,7 +2,6 @@
 
 export LANG='POSIX'
 exec 2>/dev/null
-. "${HOME}/.joyfuld"
 
 [ -x "$(command -v upower)" ] || exit 1
 

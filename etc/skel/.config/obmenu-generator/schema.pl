@@ -41,12 +41,12 @@ our $SCHEMA = [
     {cat       => ["settings",                                                          "Settings",                     "applications-accessories"]},
     {cat       => ["system",                                                            "System",                       "applications-system"]},
     {end       => undef},
-    {item      => ["$ENV{HOME}/.scripts/launch-apps.sh terminal",                       "Terminal",                     "$ENV{HOME}/.icons/Gladient/terminal.png"]},
-    {item      => ["$ENV{HOME}/.scripts/launch-apps.sh file_manager",                   "File Manager",                 "$ENV{HOME}/.icons/Gladient/file-manager.png"]},
+    {item      => ["$ENV{HOME}/.scripts/terminal.sh",                                   "Terminal",                     "$ENV{HOME}/.icons/Gladient/terminal.png"]},
+    {item      => ["thunar",                                                            "File Manager",                 "$ENV{HOME}/.icons/Gladient/file-manager.png"]},
     {item      => ["arandr",                                                            "Multi Monitor Settings",       "$ENV{HOME}/.icons/Gladient/monitor-settings.png"]},
     {sep       =>                                                                       "SESSIONS"},
     {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/restart_ui.sh",           "Restart UI",                   "$ENV{HOME}/.icons/Gladient/restart-ui.png"]},
-    {item      => ["$ENV{HOME}/.config/openbox/joyful-desktop/ob-button-set.sh",        "Change Window Button-Style",   "$ENV{HOME}/.icons/Gladient/ob-button-change.png"]},
     {item      => ["betterlockscreen -l blur",                                          "Lock",                         "$ENV{HOME}/.icons/Gladient/lock.png"]},
     {exit      => [                                                                     "Exit Openbox",                 "$ENV{HOME}/.icons/Gladient/logout.png"]},
 ]
+

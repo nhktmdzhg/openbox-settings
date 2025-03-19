@@ -1,15 +1,7 @@
 #!/usr/bin/env sh
 
-# Desc:   Custom performance mode for Rofi
-
 export LANG='POSIX'
 exec 2>/dev/null
-. "${HOME}/.joyfuld"
-
-case "$ROFI_RETV" in
-    28) LANG="$SYSTEM_LANG" exec "${0%/*}/../rofi-main.sh"
-    ;;
-esac
 
 ROW_ICON_FONT='feather 12'
 MSG_ICON_FONT='feather 48'

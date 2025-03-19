@@ -2,11 +2,8 @@
 
 export LANG='POSIX'
 exec 2>/dev/null
-. "${HOME}/.joyfuld"
 
-[ -x "$(command -v iwgetid)" -o -x "$(command -v ip)" ] || exec echo 'Install `wireless-tools` and/or `iproute2`!'
-
-GET_ET="$(ip addr show "${IFACE_ET}")"
+GET_ET="$(ip addr show enp4s0)"
 IP_ET="$(echo "${GET_ET}" | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1)"
 ESSID="$(iwgetid -r)"
 if [ -n "$IP_ET" ]; then

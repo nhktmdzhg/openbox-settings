@@ -599,7 +599,7 @@ execp_has_icon = 0
 execp_cache_icon = 0
 execp_continuous = 0
 execp_markup = 0
-execp_tooltip = 
+execp_tooltip = SSID / IP Address
 execp_lclick_command = 
 execp_rclick_command = 
 execp_mclick_command = 
@@ -785,7 +785,7 @@ button_max_icon_size = 0
 # Button 7
 button = new
 button_text = 
-button_tooltip = [L] Show Desktop [R] Session Menu
+button_tooltip = [L] Extensions Menu [R] Media Menu
 button_lclick_command = ~/.config/rofi/scripts/rofi-exts.sh session
 button_rclick_command = ~/.config/rofi/scripts/rofi-exts.sh media
 button_mclick_command = 

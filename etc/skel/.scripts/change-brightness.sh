@@ -5,9 +5,9 @@ exec >/dev/null 2>&1
 . "${HOME}/.joyfuld"
 
 case "${1}" in
-    +) brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} set "${BRIGHTNESS_STEPS:-5}%+" -q
+    +) brightnessctl set 5%+ -q
     ;;
-    -) brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} set "${BRIGHTNESS_STEPS:-5}%-" -q
+    -) brightnessctl set 5%- -q
     ;;
 esac
 
@@ -32,3 +32,4 @@ esac
 } &
 
 exit ${?}
+
