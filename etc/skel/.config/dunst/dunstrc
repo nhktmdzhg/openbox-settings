@@ -4,7 +4,7 @@
 [global]
 follow = mouse
 width = (111, 444)
-height = 111
+height = 130
 origin = bottom-center
 offset = 0x60
 

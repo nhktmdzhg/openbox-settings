@@ -15,7 +15,7 @@ wait
 
     dunstify 'Session Manager' "Welcome back <u>${USER:-$(id -nu)}</u>" -h string:synchronous:session-manager \
                                                                         -a joyful_desktop \
-                                                                        -i "~/.icons/Gladient/logout.png"
+                                                                        -i ~/.icons/Gladient/logout.png
 } &
 
 exit ${?}
