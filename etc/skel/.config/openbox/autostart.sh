@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 exec >/dev/null 2>&1
-picom --experimental-backends -b
-/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+picom -b
+lxqt-policykit-agent &
 xss-lock -q -l ~/.config/openbox/joyful-desktop/xss-lock-tsl.sh &
 
 # Autostart applications
