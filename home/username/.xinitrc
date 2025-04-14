@@ -17,6 +17,4 @@ fi
 
 export DESKTOP_SESSION=openbox
 exec openbox-session
-xset s off
-xset -dpms
 
