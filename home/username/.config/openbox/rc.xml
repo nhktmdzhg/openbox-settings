@@ -385,7 +385,7 @@
     <keybind key="W-z">
       <action name="Iconify"/>
     </keybind>
-     <!--Switch active windows. -->
+    <!--Switch active windows. -->
     <keybind key="A-Tab">
       <action name="NextWindow">
         <bar>no</bar>

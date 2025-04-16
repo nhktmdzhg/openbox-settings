@@ -836,4 +836,3 @@ launcher_tooltip = 1
 launcher_item_app = /usr/share/applications/cachy-browser.desktop
 launcher_item_app = ~/.local/share/applications/neovide.desktop
 launcher_item_app = /usr/share/applications/the-honkers-railway-launcher.desktop
-

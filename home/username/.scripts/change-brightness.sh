@@ -2,7 +2,6 @@
 
 export LANG='POSIX'
 exec >/dev/null 2>&1
-. "${HOME}/.joyfuld"
 
 case "${1}" in
     +) brightnessctl set 5%+ -q
@@ -11,11 +10,11 @@ case "${1}" in
     ;;
 esac
 
+
 {
     BRIGHTNESS_VALUE="$(brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} get)"
     MAX_BRIGHTNESS="$(brightnessctl ${BRIGHTNESS_DEVICE:+-d "$BRIGHTNESS_DEVICE"} max)"
     BRIGHTNESS=$(( BRIGHTNESS_VALUE * 100 / MAX_BRIGHTNESS ))
-
     if [ "$BRIGHTNESS" -lt 10 ]; then
         ICON='display-brightness-low'
     elif [ "$BRIGHTNESS" -lt 70 ]; then

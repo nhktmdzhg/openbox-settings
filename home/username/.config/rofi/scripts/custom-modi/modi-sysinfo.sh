@@ -70,16 +70,6 @@ if [ -x "$(command -v xrandr)" ]; then
 
 fi
 
-if [ -x "$(command -v df)" ]; then
-
-    DF_L_H="$(df -l -h --output='source,pcent,fstype' | sed -n -e '/\/dev\/root/s|%[ ]*.*$|\U&|' \
-                                                               -e 's|^/dev/root[ ]*\(.*\)$|\1|p')" \
-    FILESYSTEM_INFO="${DF_L_H%%\ *} @ ${DF_L_H##*\ }"
-
-    F_='' F="<span font_desc='${ROW_ICON_FONT}' weight='bold'>${F_}</span>   ${FILESYSTEM_INFO}"
-
-fi
-
 for SYS_MANAGER in apt \
                    emerge \
                    flatpak \

@@ -5,6 +5,7 @@ exec >/dev/null 2>&1
 
 killall -q dunst
 killall -q tint2
+killall -q nitrogen
 openbox --reconfigure &
 dunst &
 tint2 &
