@@ -396,6 +396,11 @@
         </finalactions>
       </action>
     </keybind>
+    <!-- <keybind key="A-Tab"> -->
+    <!--   <action name="Execute"> -->
+    <!--     <command>rofi -show window</command> -->
+    <!--   </action> -->
+    <!-- </keybind> -->
     <keybind key="A-S-Tab">
       <action name="PreviousWindow">
         <bar>no</bar>
