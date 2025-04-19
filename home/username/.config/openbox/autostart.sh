@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/dash
 
 exec >/dev/null 2>&1
 picom -b

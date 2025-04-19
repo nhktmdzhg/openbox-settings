@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/dash
 
 # Desc:   Custom system-info modi for rofi.
 # Author: Harry Kurn <alternate-se7en@pm.me>

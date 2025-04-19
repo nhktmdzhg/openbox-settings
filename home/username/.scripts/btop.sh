@@ -1,3 +1,3 @@
-#!/usr/bin/env sh
+#!/usr/bin/dash
 
 XMODIFIERS= alacritty -e btop

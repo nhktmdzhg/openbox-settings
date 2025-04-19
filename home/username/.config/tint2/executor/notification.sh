@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/dash
 
 export LANG='POSIX'
 exec 2>/dev/null

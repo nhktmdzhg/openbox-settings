@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/dash
 
 SYSTEM_LANG="$LANG"
 export LANG='POSIX'
