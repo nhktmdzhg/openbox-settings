@@ -32,6 +32,7 @@ tint2
 upower
 wireless_tools
 xclip
+xdotool
 xsettingsd
 xss-lock
 xfce4-power-manager
