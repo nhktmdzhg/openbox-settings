@@ -488,16 +488,6 @@ separator_style = empty
 separator_size = 6
 separator_padding = 0 0
 
-
-#-------------------------------------
-# Separator 18
-separator = new
-separator_background_id = 0
-separator_color = #f9f9f9 0
-separator_style = empty
-separator_size = 6
-separator_padding = 0 0
-
 #-------------------------------------
 # Executor 1
 execp = new
@@ -524,13 +514,13 @@ execp_icon_h = 0
 #-------------------------------------
 # Executor 2
 execp = new
-execp_command = ~/.config/tint2/executor/curr_playing
+execp_command = ~/.config/tint2/executor/curr_window_name
 execp_interval = 1
 execp_has_icon = 0
 execp_cache_icon = 0
 execp_continuous = 0
 execp_markup = 0
-execp_tooltip = Current Playing
+execp_tooltip = Current Window Name
 execp_lclick_command =  
 execp_rclick_command = 
 execp_mclick_command = 

@@ -895,7 +895,7 @@
          </application>
     -->
     <application class="*" type="normal">
-      <decor>yes</decor>
+      <decor>no</decor>
     </application>
   </applications>
 </openbox_config>

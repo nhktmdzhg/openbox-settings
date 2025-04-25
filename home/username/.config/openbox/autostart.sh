@@ -17,7 +17,7 @@ thunderbird &
 mcontrolcenter &
 flameshot &
 bottles-cli run -p Zalo -b 'Zalo' -- %u &
-discord &
+vesktop %U &
 bottles-cli run -p Unikey -b 'Zalo' -- %u &
 fcitx5 &
 nm-applet &

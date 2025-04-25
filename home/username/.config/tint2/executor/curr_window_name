@@ -1,0 +1,24 @@
+#!/usr/bin/python
+
+import os
+import subprocess
+import time
+
+def get_curr(max_len):
+    try:
+        result = subprocess.run(['xdotool', 'getactivewindow', 'getwindowname'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.returncode != 0:
+            return "No active window"
+        window_name = result.stdout.decode('utf-8').strip()
+        length = len(window_name)
+        if length < max_len:
+            return window_name
+        else:
+            unix_time = int(time.time())
+            i = unix_time % (length - (max_len - 2))
+            return window_name[i:i+(max_len - 1)]
+    except Exception as e:
+        return f'Error: {e}'
+
+if __name__ == '__main__':
+    print(get_curr(90))
