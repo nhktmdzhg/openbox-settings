@@ -212,12 +212,12 @@
     </keybind>
     <keybind key="XF86AudioPlay">
       <action name="Execute">
-        <command>~/.scripts/music-controller.sh toggle</command>
+        <command>~/.scripts/music-controller.sh play</command>
       </action>
     </keybind>
     <keybind key="XF86AudioPause">
       <action name="Execute">
-        <command>~/.scripts/music-controller.sh toggle</command>
+        <command>~/.scripts/music-controller.sh pause</command>
       </action>
     </keybind>
     <!-- Move window-focus across visible windows. -->

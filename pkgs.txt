@@ -21,6 +21,7 @@ openbox
 pavucontrol
 perl-gtk3
 picom
+playerctl
 power-profiles-daemon
 python
 rhythmbox

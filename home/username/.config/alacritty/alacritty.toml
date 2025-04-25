@@ -80,10 +80,6 @@ thickness = 0.15
 [mouse]
 hide_when_typing = true
 
-[[mouse.bindings]]
-mouse = "Middle"
-action = "PasteSelection"
-
 [keyboard]
 [[keyboard.bindings]]
 key = "Paste"
