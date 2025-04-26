@@ -2,6 +2,8 @@
 
 exec >/dev/null 2>&1
 wmname "iamnanokaWM"
+ksuperkey -e 'Super_L=Alt_L|F1'
+ksuperkey -e 'Super_R=Alt_L|F1'
 picom -b
 lxqt-policykit-agent &
 xss-lock -q -l ~/.config/openbox/joyful-desktop/xss-lock-tsl.sh &
