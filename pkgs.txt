@@ -32,6 +32,7 @@ thunar-volman
 tint2
 upower
 wireless_tools
+wmname
 xclip
 xdotool
 xsettingsd

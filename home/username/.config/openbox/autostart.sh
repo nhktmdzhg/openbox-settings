@@ -1,6 +1,7 @@
 #!/usr/bin/dash
 
 exec >/dev/null 2>&1
+wmname "iamnanokaWM"
 picom -b
 lxqt-policykit-agent &
 xss-lock -q -l ~/.config/openbox/joyful-desktop/xss-lock-tsl.sh &
@@ -15,9 +16,8 @@ tint2 &
 nitrogen --restore &
 thunderbird &
 mcontrolcenter &
-flameshot &
 bottles-cli run -p Zalo -b 'Zalo' -- %u &
-vesktop %U &
+discord &
 bottles-cli run -p Unikey -b 'Zalo' -- %u &
 fcitx5 &
 nm-applet &
