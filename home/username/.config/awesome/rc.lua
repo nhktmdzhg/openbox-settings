@@ -9,13 +9,18 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+local timer = require("gears.timer")
 
 require("awful.hotkeys_popup.keys")
 
-local super = "Mod4"
-local alt = "Mod1"
-local ctrl = "Control"
-local shift = "Shift"
+local super         = "Mod4"
+local alt           = "Mod1"
+local ctrl          = "Control"
+local shift         = "Shift"
+local margin_top    = 10
+local margin_bottom = 10
+local margin_left   = 10
+local margin_right  = 10
 
 if awesome.startup_errors then
     naughty.notify({
@@ -51,8 +56,13 @@ awful.layout.layouts = {
 }
 
 -- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+
+local function get_output_of_cmd(cmd)
+    local handle = io.popen(cmd)
+    local result = handle:read("*a")
+    handle:close()
+    return result
+end
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -83,13 +93,8 @@ local tasklist_buttons = gears.table.join(
                 { raise = true }
             )
         end
-    end),
-    awful.button({}, 4, function()
-        awful.client.focus.byidx(1)
-    end),
-    awful.button({}, 5, function()
-        awful.client.focus.byidx(-1)
-    end))
+    end)
+)
 
 local function set_wallpaper(s)
     local wallpaper_path = "/home/iamnanoka/wallpaper/march 7th 4k.jpg"
@@ -115,30 +120,27 @@ awful.screen.connect_for_each_screen(function(s)
         x = 5,
         y = 5,
         bg = "#00000000",
-        fg = "#ffffff",
-        shape = function(cr, width, height)
-            gears.shape.rounded_rect(cr, width, height, 10)
-        end
+        fg = "#ffffff"
     })
 
     s.mytasklist = awful.widget.tasklist {
-        screen   = s,
-        filter   = awful.widget.tasklist.filter.currenttags,
-        buttons  = tasklist_buttons,
-        style    = {
+        screen          = s,
+        filter          = awful.widget.tasklist.filter.currenttags,
+        buttons         = tasklist_buttons,
+        style           = {
             shape_border_width = 1,
             shape_border_color = '#777777',
-            shape  = gears.shape.rounded_rect,
+            shape              = gears.shape.rounded_rect,
         },
-        layout   = {
+        layout          = {
             spacing = 4,
             layout  = wibox.layout.fixed.horizontal
         },
         widget_template = {
             {
                 {
-                    id     = "icon_role",
-                    widget = wibox.widget.imagebox,
+                    id           = "icon_role",
+                    widget       = wibox.widget.imagebox,
                     forced_width = 28,
                 },
                 margins = 2,
@@ -168,9 +170,9 @@ awful.screen.connect_for_each_screen(function(s)
                 align  = "center",
                 valign = "center",
                 widget = wibox.widget.textbox,
-                font   = "Iosevka 14",
+                font   = "Iosevka 18",
             },
-            margins = 5,
+            margins = 2,
             widget = wibox.container.margin,
         },
         widget = wibox.container.background,
@@ -198,6 +200,13 @@ awful.screen.connect_for_each_screen(function(s)
         arch_logo.bg = "#f9f9f9ee"
     end)
 
+    local seperator = wibox.widget {
+        widget = wibox.widget.separator,
+        orientation = "vertical",
+        forced_width = 6,
+        color = "#000000",
+    }
+
     local sep_right = wibox.widget {
         markup = '',
         align  = "center",
@@ -211,6 +220,325 @@ awful.screen.connect_for_each_screen(function(s)
         margins = 2,
         widget = wibox.container.margin
     }
+
+    local window_name = wibox.widget {
+        widget = wibox.widget.textbox,
+        font   = "Kurinto Mono JP 9",
+        align  = "center",
+        valign = "center"
+    }
+
+    local window_name_container = wibox.container.margin(window_name, 5, 5, 0, 0)
+    window_name_container = wibox.container.background(window_name_container)
+    window_name_container.bg = "#434c5eee"
+    window_name_container.fg = "#f9f9f9ff"
+    window_name_container.shape = gears.shape.rounded_bar
+    window_name_container.shape_clip = true
+
+    awful.tooltip {
+        objects = { window_name_container },
+        text = "Window Name"
+    }
+
+    timer {
+        timeout = 1,
+        autostart = true,
+        callnow = true,
+        callback = function()
+            local c = client.focus
+            local name = ""
+            if c then
+                name = c.name
+            else
+                name = "No focused window"
+            end
+            local length = string.len(name)
+            if length < 60 then
+                window_name.text = name
+            else
+                local unix_time = os.time()
+                local i = unix_time % (length - (60 - 2))
+                window_name.text = string.sub(name, i, i + 60 - 1)
+            end
+        end
+    }
+
+    local battery_icon = wibox.widget {
+        widget = wibox.widget.textbox,
+        font   = "MesloLGS Nerd Font Mono 15",
+        align  = "center",
+        valign = "center"
+    }
+
+    local battery_icon_container = wibox.container.margin(battery_icon, 5, 5, 0, 0)
+    battery_icon_container = wibox.container.background(battery_icon_container)
+    battery_icon_container.bg = "#f9f9f9ee"
+    battery_icon_container.fg = "#434c5eff"
+    battery_icon_container.shape = gears.shape.circle
+    battery_icon_container.shape_clip = true
+
+    awful.tooltip {
+        objects = { battery_icon_container },
+        text = "Battery Status"
+    }
+
+    timer {
+        timeout = 1,
+        autostart = true,
+        callnow = true,
+        callback = function()
+            battery_icon.text = get_output_of_cmd("~/.config/tint2/executor/battery.sh")
+        end
+    }
+
+    local network_icon = wibox.widget {
+        widget = wibox.widget.textbox,
+        font   = "Material Bold 10",
+        align  = "center",
+        valign = "center"
+    }
+
+    local network_icon_container = wibox.container.margin(network_icon, 5, 5, 0, 0)
+    network_icon_container = wibox.container.background(network_icon_container)
+    network_icon_container.bg = "#f9f9f9ee"
+    network_icon_container.fg = "#434c5eff"
+    network_icon_container.shape = gears.shape.circle
+    network_icon_container.shape_clip = true
+
+    awful.tooltip {
+        objects = { network_icon_container },
+        text = "Network Status"
+    }
+
+    timer {
+        timeout = 1,
+        autostart = true,
+        callnow = true,
+        callback = function()
+            network_icon.text = get_output_of_cmd("~/.config/tint2/executor/network.sh icon")
+        end
+    }
+
+    local network_status = wibox.widget {
+        widget = wibox.widget.textbox,
+        font   = "Kurinto Mono JP 9",
+        align  = "center",
+        valign = "center"
+    }
+
+    local network_status_container = wibox.container.margin(network_status, 5, 5, 0, 0)
+    network_status_container = wibox.container.background(network_status_container)
+    network_status_container.bg = "#434c5eee"
+    network_status_container.fg = "#f9f9f9ff"
+    network_status_container.shape = gears.shape.rounded_bar
+    network_status_container.shape_clip = true
+
+    awful.tooltip {
+        objects = { network_status_container },
+        text = "Network Status"
+    }
+
+    timer {
+        timeout = 1,
+        autostart = true,
+        callnow = true,
+        callback = function()
+            network_status.text = get_output_of_cmd("~/.config/tint2/executor/network.sh status")
+        end
+    }
+
+    local volume_icon = wibox.widget {
+        widget = wibox.widget.textbox,
+        font   = "Material Bold 10",
+        align  = "center",
+        valign = "center"
+    }
+
+    local volume_icon_container = wibox.container.margin(volume_icon, 5, 5, 0, 0)
+    volume_icon_container = wibox.container.background(volume_icon_container)
+    volume_icon_container.bg = "#f9f9f9ee"
+    volume_icon_container.fg = "#434c5eff"
+    volume_icon_container.shape = gears.shape.circle
+    volume_icon_container.shape_clip = true
+
+    awful.tooltip {
+        objects = { volume_icon_container },
+        text = "[L] Toggle Audio Mute [S] Audio Volume +/-"
+    }
+
+    timer {
+        timeout = 0.1,
+        autostart = true,
+        callnow = true,
+        callback = function()
+            volume_icon.text = get_output_of_cmd("~/.config/tint2/executor/volume.sh icon")
+        end
+    }
+
+    volume_icon_container:connect_signal("button::press", function(_, _, _, button)
+        if button == 1 then
+            awful.spawn.with_shell("~/.config/tint2/executor/volume.sh 0")
+        elseif button == 4 then
+            awful.spawn.with_shell("~/.config/tint2/executor/volume.sh +")
+        elseif button == 5 then
+            awful.spawn.with_shell("~/.config/tint2/executor/volume.sh -")
+        end
+    end)
+
+    local volume_percent = wibox.widget {
+        widget = wibox.widget.textbox,
+        font   = "Kurinto Mono JP 9",
+        align  = "center",
+        valign = "center"
+    }
+
+    local volume_percent_container = wibox.container.margin(volume_percent, 5, 5, 0, 0)
+    volume_percent_container = wibox.container.background(volume_percent_container)
+    volume_percent_container.bg = "#434c5eee"
+    volume_percent_container.fg = "#f9f9f9ff"
+    volume_percent_container.shape = gears.shape.rounded_bar
+    volume_percent_container.shape_clip = true
+
+    awful.tooltip {
+        objects = { volume_percent_container },
+        text = "[S] Audio Volume +/-"
+    }
+
+    timer {
+        timeout = 0.1,
+        autostart = true,
+        callnow = true,
+        callback = function()
+            volume_percent.text = get_output_of_cmd("~/.config/tint2/executor/volume.sh percent")
+        end
+    }
+
+    volume_percent_container:connect_signal("button::press", function(_, _, _, button)
+        if button == 4 then
+            awful.spawn.with_shell("~/.config/tint2/executor/volume.sh +")
+        elseif button == 5 then
+            awful.spawn.with_shell("~/.config/tint2/executor/volume.sh -")
+        end
+    end)
+
+    local calendar_icon = wibox.widget {
+        widget = wibox.widget.textbox,
+        font   = "Material Bold 10",
+        align  = "center",
+        valign = "center",
+        text   = ""
+    }
+
+    local calendar_icon_container = wibox.container.margin(calendar_icon, 5, 5, 0, 0)
+    calendar_icon_container = wibox.container.background(calendar_icon_container)
+    calendar_icon_container.bg = "#f9f9f9ee"
+    calendar_icon_container.fg = "#434c5eff"
+    calendar_icon_container.shape = gears.shape.circle
+    calendar_icon_container.shape_clip = true
+
+    awful.tooltip {
+        objects = { calendar_icon_container },
+        text = "Calendar"
+    }
+
+    calendar_icon_container:connect_signal("button::press", function(_, _, _, button)
+        if button == 1 then
+            awful.spawn("gsimplecal")
+        end
+    end)
+
+    local date_widget = wibox.widget {
+        widget = wibox.widget.textbox,
+        font   = "Kurinto Mono JP 9",
+        align  = "center",
+        valign = "center"
+    }
+
+    local date_widget_container = wibox.container.margin(date_widget, 5, 5, 0, 0)
+    date_widget_container = wibox.container.background(date_widget_container)
+    date_widget_container.bg = "#434c5eee"
+    date_widget_container.fg = "#f9f9f9ff"
+    date_widget_container.shape = gears.shape.rounded_bar
+    date_widget_container.shape_clip = true
+
+    awful.tooltip {
+        objects = { date_widget_container },
+        text = "Date"
+    }
+
+    timer {
+        timeout = 1,
+        autostart = true,
+        callnow = true,
+        callback = function()
+            date_widget.text = get_output_of_cmd("date +\"%Y年%m月%d日\"")
+        end
+    }
+
+    local time_widget = wibox.widget {
+        widget = wibox.widget.textbox,
+        font   = "Kurinto Mono 9",
+        align  = "center",
+        valign = "center"
+    }
+
+    local time_widget_container = wibox.container.margin(time_widget, 5, 5, 0, 0)
+    time_widget_container = wibox.container.background(time_widget_container)
+    time_widget_container.bg = "#434c5eee"
+    time_widget_container.fg = "#f9f9f9ff"
+    time_widget_container.shape = gears.shape.rounded_bar
+    time_widget_container.shape_clip = true
+
+    awful.tooltip {
+        objects = { time_widget_container },
+        text = "Time"
+    }
+
+    timer {
+        timeout = 1,
+        autostart = true,
+        callnow = true,
+        callback = function()
+            time_widget.text = get_output_of_cmd("date +\"%H:%M\"")
+        end
+    }
+
+    local logout_logo = wibox.widget {
+        {
+            {
+                markup = "",
+                align  = "center",
+                valign = "center",
+                widget = wibox.widget.textbox,
+                font   = "MesloLGS Nerd Font Mono 12",
+            },
+            margins = 2,
+            widget = wibox.container.margin,
+        },
+        widget = wibox.container.background,
+        bg = "#f9f9f9ee",
+        fg = "#434c5eff",
+    }
+    awful.tooltip {
+        objects = { logout_logo },
+        text = "[L] Session Menu [R] Extensions Menu"
+    }
+
+    logout_logo:connect_signal("button::press", function(_, _, _, button)
+        if button == 1 then
+            awful.spawn.with_shell("~/.config/rofi/scripts/rofi-exts.sh session")
+        elseif button == 3 then
+            awful.spawn.with_shell("~/.config/rofi/scripts/rofi-exts.sh media")
+        end
+    end)
+
+    logout_logo:connect_signal("mouse::enter", function()
+        logout_logo.bg = "#f9f9f9cc"
+    end)
+
+    logout_logo:connect_signal("mouse::leave", function()
+        logout_logo.bg = "#f9f9f9ee"
+    end)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -230,7 +558,27 @@ awful.screen.connect_for_each_screen(function(s)
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mytextclock
+            window_name_container,
+            seperator,
+            battery_icon_container,
+            seperator,
+            network_icon_container,
+            seperator,
+            network_status_container,
+            seperator,
+            volume_icon_container,
+            seperator,
+            volume_percent_container,
+            seperator,
+            calendar_icon_container,
+            seperator,
+            date_widget_container,
+            seperator,
+            time_widget_container,
+            seperator,
+            sep_left,
+            logout_logo,
+            sep_right,
         },
     }
 end)
@@ -506,6 +854,16 @@ client.connect_signal("manage", function(c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
+    local wa = c.screen.workarea
+    c:geometry {
+        x      = wa.x + margin_left,
+        y      = wa.y + margin_top,
+        width  = c.width,
+        height = c.height
+    }
+    c.shape = function(cr, w, h)
+        gears.shape.rounded_rect(cr, w, h, 6)
+    end
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
@@ -559,19 +917,14 @@ client.connect_signal("request::geometry", function(c)
     local screen = c.screen
     local wa = screen.workarea
 
-    local margin_top    = 10
-    local margin_bottom = 10
-    local margin_left   = 10
-    local margin_right  = 10
-
     if c.fullscreen then
         c.shape = gears.shape.rectangle
         return
     elseif c.maximized then
         -- Maximized nhưng vẫn có margin
         c:geometry {
-            x = wa.x + margin_left,
-            y = wa.y + margin_top,
+            x      = wa.x + margin_left,
+            y      = wa.y + margin_top,
             width  = wa.width - margin_left - margin_right,
             height = wa.height - margin_top - margin_bottom
         }
@@ -581,8 +934,8 @@ client.connect_signal("request::geometry", function(c)
     else
         -- Cửa sổ bình thường
         c:geometry {
-            x = wa.x + margin_left,
-            y = wa.y + margin_top,
+            x      = wa.x + margin_left,
+            y      = wa.y + margin_top,
             width  = c.width,
             height = c.height
         }
