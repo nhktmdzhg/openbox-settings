@@ -20,4 +20,4 @@ def get_curr(max_len):
         return f'Error: {e}'
 
 if __name__ == '__main__':
-    print(get_curr(90))
+    print(get_curr(60))
