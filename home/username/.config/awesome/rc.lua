@@ -139,6 +139,7 @@ awful.screen.connect_for_each_screen(function(s)
                 {
                     id     = "icon_role",
                     widget = wibox.widget.imagebox,
+                    forced_width = 28,
                 },
                 margins = 2,
                 widget  = wibox.container.margin,
