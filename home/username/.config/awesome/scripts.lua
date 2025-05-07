@@ -208,9 +208,9 @@ function scripts.change_brightness(arg)
         icon = 'display-brightness-high'
     end
     awful.spawn("dunstify \"" ..
-    brightness ..
-    "\" -h \"int:value:" ..
-    brightness .. "\" -a joyful_desktop -h string:synchronous:display-brightness -i " .. icon .. " -t 1000")
+        brightness ..
+        "\" -h \"int:value:" ..
+        brightness .. "\" -a joyful_desktop -h string:synchronous:display-brightness -i " .. icon .. " -t 1000")
 end
 
 return scripts

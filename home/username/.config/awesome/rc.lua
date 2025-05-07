@@ -895,6 +895,9 @@ client.connect_signal("manage", function(c)
             width  = c.width,
             height = c.height
         }
+        awful.spawn("dunstctl set-paused false")
+    else
+        awful.spawn("dunstctl set-paused true")
     end
     c.shape = function(cr, w, h)
         gears.shape.rounded_rect(cr, w, h, 6)
@@ -994,7 +997,9 @@ client.connect_signal("property::fullscreen", function(c)
 
     if c.fullscreen then
         screen.mywibox.ontop = false
+        awful.spawn("dunstctl set-paused true")
     else
         screen.mywibox.ontop = true
+        awful.spawn("dunstctl set-paused false")
     end
 end)
