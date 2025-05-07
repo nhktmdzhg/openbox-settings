@@ -13,19 +13,38 @@ local function get_output_of_cmd(cmd)
 end
 
 function scripts.get_battery_icon()
-    local output = get_output_of_cmd(
-        "upower -i $(upower -e | grep BAT) 2>/dev/null | awk '/state|percentage/ {print $2}'")
-    local lines = {}
-    for line in output:gmatch("[^\r\n]+") do
-        table.insert(lines, line)
+    local devices_output = get_output_of_cmd("upower -e")
+    local battery_device
+
+    for line in devices_output:gmatch("[^\n]+") do
+        if line:match("BAT") then
+            battery_device = line
+            break
+        end
     end
 
-    if #lines < 2 then
+    if not battery_device then
         return nil
     end
 
-    local status = lines[1]
-    local percentage = tonumber(lines[2]:match("(%d+)"))
+    local info_output = get_output_of_cmd("upower -i " .. battery_device)
+
+    local status, percentage
+
+    for line in info_output:gmatch("[^\n]+") do
+        if line:find("state:") then
+            _, _, status = line:find("%s*(%w+)")
+        elseif line:find("percentage:") then
+            local percent_str = line:match("(%d+)%%")
+            if percent_str then
+                percentage = tonumber(percent_str)
+            end
+        end
+    end
+
+    if not status or not percentage then
+        return nil
+    end
 
     local icons = {
         empty          = '',
@@ -54,25 +73,40 @@ function scripts.get_battery_icon()
 end
 
 function scripts.get_battery_percent()
-    local output = get_output_of_cmd(
-        "upower -i $(upower -e | grep BAT) 2>/dev/null | awk '/state|percentage/ {print $2}'")
-    local lines = {}
-    for line in output:gmatch("[^\r\n]+") do
-        table.insert(lines, line)
+    local devices_output = get_output_of_cmd("upower -e")
+    local battery_device
+
+    for line in devices_output:gmatch("[^\n]+") do
+        if line:match("BAT") then
+            battery_device = line
+            break
+        end
     end
 
-    if #lines < 2 then
+    if not battery_device then
         return nil
     end
 
-    local percentage = tonumber(lines[2]:match("(%d+)"))
-    return percentage
+    local info_output = get_output_of_cmd("upower -i " .. battery_device)
+
+    local percentage
+
+    for line in info_output:gmatch("[^\n]+") do
+        if line:find("percentage:") then
+            local percent_str = line:match("(%d+)%%")
+            if percent_str then
+                return tonumber(percent_str)
+            else
+                return nil
+            end
+        end
+    end
 end
 
 function scripts.get_network_info(arg)
     local ethernet = get_output_of_cmd("ip addr show enp4s0")
     local ip_ethernet = ""
-    for line in ethernet:gmatch("[^\r\n]+") do
+    for line in ethernet:gmatch("[^\n]+") do
         if line:find("inet ") then
             ip_ethernet = line:match("inet (%d+%.%d+%.%d+%.%d+)")
             break
@@ -106,11 +140,24 @@ function scripts.get_volume_info(arg)
         awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
     end
 
-    local vol_output = get_output_of_cmd("pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}' | tr -d '%'")
-    local volume = tonumber(vol_output, 10)
+    local vol_raw = get_output_of_cmd("pactl get-sink-volume @DEFAULT_SINK@")
+    local volume
+    for line in vol_raw:gmatch("[^\n]+") do
+        local percent = line:match("(%d+)%%")
+        if percent then
+            volume = tonumber(percent) or 0
+            break
+        end
+    end
 
-    local mute_output = get_output_of_cmd("pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}'")
-    local muted = mute_output:match("yes") ~= nil
+    local mute_raw = get_output_of_cmd("pactl get-sink-mute @DEFAULT_SINK@")
+    local muted = false
+    for line in mute_raw:gmatch("[^\n]+") do
+        if line:lower():find("mute:") then
+            muted = line:find("yes") ~= nil
+            break
+        end
+    end
 
     local icon, status
 
@@ -131,7 +178,7 @@ function scripts.get_volume_info(arg)
     if arg == 2 then
         return icon
     elseif arg == 3 then
-        return status or vol_output
+        return status or tostring(volume)
     else
         return nil
     end
@@ -160,7 +207,10 @@ function scripts.change_brightness(arg)
     else
         icon = 'display-brightness-high'
     end
-    awful.spawn("dunstify \"" .. brightness .. "\" -h \"int:value:" .. brightness .. "\" -a joyful_desktop -h string:synchronous:display-brightness -i " .. icon .." -t 1000")
+    awful.spawn("dunstify \"" ..
+    brightness ..
+    "\" -h \"int:value:" ..
+    brightness .. "\" -a joyful_desktop -h string:synchronous:display-brightness -i " .. icon .. " -t 1000")
 end
 
 return scripts
