@@ -1,15 +1,10 @@
 local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
-
 local wibox = require("wibox")
-
 local beautiful = require("beautiful")
-
 local timer = require("gears.timer")
-
 local scripts = require("scripts")
-
 require("awful.hotkeys_popup.keys")
 
 local super         = "Mod4"
@@ -121,7 +116,7 @@ awful.screen.connect_for_each_screen(function(s)
         style           = {
             shape_border_width = 1,
             shape_border_color = '#777777',
-            shape              = gears.shape.rounded_rect,
+            shape              = gears.shape.rounded_rect
         },
         layout          = {
             spacing = 4,
@@ -132,14 +127,14 @@ awful.screen.connect_for_each_screen(function(s)
                 {
                     id           = "icon_role",
                     widget       = wibox.widget.imagebox,
-                    forced_width = 28,
+                    forced_width = 28
                 },
                 margins = 2,
-                widget  = wibox.container.margin,
+                widget  = wibox.container.margin
             },
             id     = 'background_role',
-            widget = wibox.container.background,
-        },
+            widget = wibox.container.background
+        }
     }
 
     local constrained_tasklist = wibox.container.constraint(s.mytasklist, "exact", nil, 32)
@@ -150,8 +145,7 @@ awful.screen.connect_for_each_screen(function(s)
         align  = "center",
         valign = "center",
         widget = wibox.widget.textbox,
-        font   = "Iosevka 14",
-
+        font   = "Iosevka 14"
     }
 
     local arch_logo = wibox.widget {
@@ -161,14 +155,14 @@ awful.screen.connect_for_each_screen(function(s)
                 align  = "center",
                 valign = "center",
                 widget = wibox.widget.textbox,
-                font   = "Iosevka 18",
+                font   = "Iosevka 18"
             },
             margins = 2,
-            widget = wibox.container.margin,
+            widget = wibox.container.margin
         },
         widget = wibox.container.background,
         bg = "#f9f9f9ee",
-        fg = "#434c5eff",
+        fg = "#434c5eff"
     }
     awful.tooltip {
         objects = { arch_logo },
@@ -196,7 +190,7 @@ awful.screen.connect_for_each_screen(function(s)
         widget = wibox.widget.separator,
         orientation = "vertical",
         forced_width = 6,
-        color = "#000000",
+        color = "#000000"
     }
 
     local sep_right = wibox.widget {
@@ -204,7 +198,7 @@ awful.screen.connect_for_each_screen(function(s)
         align  = "center",
         valign = "center",
         widget = wibox.widget.textbox,
-        font   = "Iosevka 14",
+        font   = "Iosevka 14"
     }
 
     local mysystray = wibox.widget {
@@ -530,14 +524,14 @@ awful.screen.connect_for_each_screen(function(s)
                 align  = "center",
                 valign = "center",
                 widget = wibox.widget.textbox,
-                font   = "MesloLGS Nerd Font Mono 12",
+                font   = "MesloLGS Nerd Font Mono 12"
             },
             margins = 2,
-            widget = wibox.container.margin,
+            widget = wibox.container.margin
         },
         widget = wibox.container.background,
         bg = "#f9f9f9ee",
-        fg = "#434c5eff",
+        fg = "#434c5eff"
     }
     awful.tooltip {
         objects = { logout_logo },
@@ -568,13 +562,13 @@ awful.screen.connect_for_each_screen(function(s)
             sep_left,
             arch_logo,
             sep_right,
-            mysystray,
+            mysystray
         },
         {
             constrained_tasklist,
             halign = "center",
             valign = "center",
-            widget = wibox.container.place,
+            widget = wibox.container.place
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
@@ -600,8 +594,8 @@ awful.screen.connect_for_each_screen(function(s)
             seperator,
             sep_left,
             logout_logo,
-            sep_right,
-        },
+            sep_right
+        }
     }
 end)
 -- }}}
@@ -862,7 +856,7 @@ awful.rules.rules = {
             keys = clientkeys,
             buttons = clientbuttons,
             screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+            placement = awful.placement.centered
         }
     },
     {
@@ -892,8 +886,8 @@ client.connect_signal("manage", function(c)
         c:geometry {
             x      = wa.x + margin_left,
             y      = wa.y + margin_top,
-            width  = c.width,
-            height = c.height
+            width  = math.min(wa.width - margin_left - margin_right, c.width),
+            height = math.min(wa.height - margin_top - margin_bottom, c.height)
         }
         awful.spawn("dunstctl set-paused false")
     else
@@ -982,8 +976,8 @@ client.connect_signal("request::geometry", function(c)
         c:geometry {
             x      = wa.x + margin_left,
             y      = wa.y + margin_top,
-            width  = c.width,
-            height = c.height
+            width  = math.min(wa.width - margin_left - margin_right, c.width),
+            height = math.min(wa.height - margin_top - margin_bottom, c.height)
         }
         c.shape = function(cr, w, h)
             gears.shape.rounded_rect(cr, w, h, 6)
