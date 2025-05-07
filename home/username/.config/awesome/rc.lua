@@ -6,10 +6,9 @@ local wibox = require("wibox")
 
 local beautiful = require("beautiful")
 
-local naughty = require("naughty")
-local menubar = require("menubar")
-local hotkeys_popup = require("awful.hotkeys_popup")
 local timer = require("gears.timer")
+
+local scripts = require("scripts")
 
 require("awful.hotkeys_popup.keys")
 
@@ -23,11 +22,8 @@ local margin_left   = 10
 local margin_right  = 10
 
 if awesome.startup_errors then
-    naughty.notify({
-        preset = naughty.config.presets.critical,
-        title = "Oops, there were errors during startup!",
-        text = awesome.startup_errors
-    })
+    awesome.spawn("dunstify -u critical -t 'Oops, there were errors during startup!' -a 'AwesomeWM' -i 'arch-error' '" ..
+        awesome.startup_errors .. "'")
 end
 
 do
@@ -35,21 +31,13 @@ do
     awesome.connect_signal("debug::error", function(err)
         if in_error then return end
         in_error = true
-
-        naughty.notify({
-            preset = naughty.config.presets.critical,
-            title = "Oops, an error happened!",
-            text = tostring(err)
-        })
+        awesome.spawn("dunstify -u critical -t 'Oops, an error happened!' -a 'AwesomeWM' -i 'arch-error' '" ..
+            tostring(err) .. "'")
         in_error = false
     end)
 end
 
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-
-terminal = "alacritty"
-editor = "nvim"
-editor_cmd = terminal .. " -e " .. editor
 
 awful.layout.layouts = {
     awful.layout.suit.floating
@@ -59,28 +47,30 @@ awful.layout.layouts = {
 
 local function get_output_of_cmd(cmd)
     local handle = io.popen(cmd)
-    local result = handle:read("*a")
-    handle:close()
+    local result = handle and handle:read("*a") or ""
+    if handle then
+        handle:close()
+    end
     return result
 end
 
 -- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-    awful.button({}, 1, function(t) t:view_only() end),
-    awful.button({ super }, 1, function(t)
-        if client.focus then
-            client.focus:move_to_tag(t)
-        end
-    end),
-    awful.button({}, 3, awful.tag.viewtoggle),
-    awful.button({ super }, 3, function(t)
-        if client.focus then
-            client.focus:toggle_tag(t)
-        end
-    end),
-    awful.button({}, 4, function(t) awful.tag.viewnext(t.screen) end),
-    awful.button({}, 5, function(t) awful.tag.viewprev(t.screen) end)
-)
+-- local taglist_buttons = gears.table.join(
+--     awful.button({}, 1, function(t) t:view_only() end),
+--     awful.button({ super }, 1, function(t)
+--         if client.focus then
+--             client.focus:move_to_tag(t)
+--         end
+--     end),
+--     awful.button({}, 3, awful.tag.viewtoggle),
+--     awful.button({ super }, 3, function(t)
+--         if client.focus then
+--             client.focus:toggle_tag(t)
+--         end
+--     end),
+--     awful.button({}, 4, function(t) awful.tag.viewnext(t.screen) end),
+--     awful.button({}, 5, function(t) awful.tag.viewprev(t.screen) end)
+-- )
 
 local tasklist_buttons = gears.table.join(
     awful.button({}, 1, function(c)
@@ -120,7 +110,8 @@ awful.screen.connect_for_each_screen(function(s)
         x = 5,
         y = 5,
         bg = "#00000000",
-        fg = "#ffffff"
+        fg = "#ffffff",
+        ontop = true
     })
 
     s.mytasklist = awful.widget.tasklist {
@@ -186,7 +177,8 @@ awful.screen.connect_for_each_screen(function(s)
 
     arch_logo:connect_signal("button::press", function(_, _, _, button)
         if button == 1 then
-            awful.spawn.with_shell("~/.config/rofi/scripts/rofi-main.sh")
+            awful.spawn.with_shell(
+                "XMODIFIERS=@im=none rofi -theme-str '@import \"main.rasi\"' -no-lazy-grab -show drun -modi drun")
         elseif button == 3 then
             awful.spawn.with_shell("~/.config/rofi/scripts/rofi-exts.sh")
         end
@@ -241,7 +233,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     timer {
-        timeout = 1,
+        timeout = 0.1,
         autostart = true,
         callnow = true,
         callback = function()
@@ -257,8 +249,8 @@ awful.screen.connect_for_each_screen(function(s)
                 window_name.text = name
             else
                 local unix_time = os.time()
-                local i = unix_time % (length - (60 - 2))
-                window_name.text = string.sub(name, i, i + 60 - 1)
+                local i = unix_time % (length - 58)
+                window_name.text = string.sub(name, i, i + 59)
             end
         end
     }
@@ -287,7 +279,35 @@ awful.screen.connect_for_each_screen(function(s)
         autostart = true,
         callnow = true,
         callback = function()
-            battery_icon.text = get_output_of_cmd("~/.config/tint2/executor/battery.sh")
+            battery_icon.text = scripts.get_battery_icon()
+        end
+    }
+
+    local battery_percent = wibox.widget {
+        widget = wibox.widget.textbox,
+        font   = "Kurinto Mono JP 9",
+        align  = "center",
+        valign = "center"
+    }
+
+    local battery_percent_container = wibox.container.margin(battery_percent, 5, 5, 0, 0)
+    battery_percent_container = wibox.container.background(battery_percent_container)
+    battery_percent_container.bg = "#434c5eee"
+    battery_percent_container.fg = "#f9f9f9ff"
+    battery_percent_container.shape = gears.shape.rounded_bar
+    battery_percent_container.shape_clip = true
+
+    awful.tooltip {
+        objects = { battery_percent_container },
+        text = "Window Name"
+    }
+
+    timer {
+        timeout = 1,
+        autostart = true,
+        callnow = true,
+        callback = function()
+            battery_percent.text = scripts.get_battery_percent() .. "%"
         end
     }
 
@@ -315,7 +335,7 @@ awful.screen.connect_for_each_screen(function(s)
         autostart = true,
         callnow = true,
         callback = function()
-            network_icon.text = get_output_of_cmd("~/.config/tint2/executor/network.sh icon")
+            network_icon.text = scripts.get_network_info(0)
         end
     }
 
@@ -343,7 +363,7 @@ awful.screen.connect_for_each_screen(function(s)
         autostart = true,
         callnow = true,
         callback = function()
-            network_status.text = get_output_of_cmd("~/.config/tint2/executor/network.sh status")
+            network_status.text = scripts.get_network_info(1)
         end
     }
 
@@ -371,17 +391,17 @@ awful.screen.connect_for_each_screen(function(s)
         autostart = true,
         callnow = true,
         callback = function()
-            volume_icon.text = get_output_of_cmd("~/.config/tint2/executor/volume.sh icon")
+            volume_icon.text = scripts.get_volume_info(2)
         end
     }
 
     volume_icon_container:connect_signal("button::press", function(_, _, _, button)
         if button == 1 then
-            awful.spawn.with_shell("~/.config/tint2/executor/volume.sh 0")
+            scripts.get_volume_info(0)
         elseif button == 4 then
-            awful.spawn.with_shell("~/.config/tint2/executor/volume.sh +")
+            scripts.get_volume_info(1)
         elseif button == 5 then
-            awful.spawn.with_shell("~/.config/tint2/executor/volume.sh -")
+            scripts.get_volume_info(-1)
         end
     end)
 
@@ -409,15 +429,15 @@ awful.screen.connect_for_each_screen(function(s)
         autostart = true,
         callnow = true,
         callback = function()
-            volume_percent.text = get_output_of_cmd("~/.config/tint2/executor/volume.sh percent")
+            volume_percent.text = scripts.get_volume_info(3)
         end
     }
 
     volume_percent_container:connect_signal("button::press", function(_, _, _, button)
         if button == 4 then
-            awful.spawn.with_shell("~/.config/tint2/executor/volume.sh +")
+            scripts.get_volume_info(1)
         elseif button == 5 then
-            awful.spawn.with_shell("~/.config/tint2/executor/volume.sh -")
+            scripts.get_volume_info(-1)
         end
     end)
 
@@ -562,6 +582,8 @@ awful.screen.connect_for_each_screen(function(s)
             seperator,
             battery_icon_container,
             seperator,
+            battery_percent_container,
+            seperator,
             network_icon_container,
             seperator,
             network_status_container,
@@ -619,25 +641,25 @@ local function toggle_show_desktop()
     end
 end
 
-switcher = require("awesome-switcher")
+local switcher = require("awesome-switcher")
 
-globalkeys = gears.table.join(
+local globalkeys = gears.table.join(
 -- Brightness controls --
     awful.key({}, "XF86MonBrightnessUp", function()
-        awful.spawn.with_shell("~/.scripts/change-brightness.sh +")
+        scripts.change_brightness(1)
     end),
     awful.key({}, "XF86MonBrightnessDown", function()
-        awful.spawn.with_shell("~/.scripts/change-brightness.sh -")
+        scripts.change_brightness(-1)
     end),
     -- Audio-volume controls --
     awful.key({}, "XF86AudioRaiseVolume", function()
-        awful.spawn.with_shell("~/.scripts/change-volume.sh +")
+        scripts.get_volume_info(1)
     end),
     awful.key({}, "XF86AudioLowerVolume", function()
-        awful.spawn.with_shell("~/.scripts/change-volume.sh -")
+        scripts.get_volume_info(-1)
     end),
     awful.key({}, "XF86AudioMute", function()
-        awful.spawn.with_shell("~/.scripts/change-volume.sh 0")
+        scripts.get_volume_info(0)
     end),
     awful.key({}, "XF86AudioPlay", function()
         awful.spawn.with_shell("playerctl play-pause")
@@ -666,7 +688,8 @@ globalkeys = gears.table.join(
         awful.spawn.with_shell("~/.config/rofi/scripts/rofi-exts.sh session")
     end),
     awful.key({ alt }, "F1", function()
-        awful.spawn.with_shell("~/.config/rofi/scripts/rofi-main.sh")
+        awful.spawn.with_shell(
+            "XMODIFIERS=@im=none rofi -theme-str '@import \"main.rasi\"' -no-lazy-grab -show drun -modi drun")
     end),
     -- Screenshot controls --
     awful.key({}, "Print", function()
@@ -696,7 +719,7 @@ globalkeys = gears.table.join(
 
 root.keys(globalkeys)
 
-clientkeys = gears.table.join(
+local clientkeys = gears.table.join(
     awful.key({ super, shift }, "Up", function(c)
         if c and c.floating then
             c:relative_move(0, -10, 0, 0)
@@ -808,7 +831,7 @@ clientkeys = gears.table.join(
 --     )
 -- end
 
-clientbuttons = gears.table.join(
+local clientbuttons = gears.table.join(
     awful.button({}, 1, function(c)
         c:emit_signal("request::activate", "mouse_click", { raise = true })
     end),
@@ -841,6 +864,16 @@ awful.rules.rules = {
             screen = awful.screen.preferred,
             placement = awful.placement.no_overlap + awful.placement.no_offscreen,
         }
+    },
+    {
+        rule_any = {
+            class = {
+                "neovide"
+            }
+        },
+        properties = {
+            maximized = true,
+        }
     }
 }
 -- }}}
@@ -855,12 +888,14 @@ client.connect_signal("manage", function(c)
         awful.placement.no_offscreen(c)
     end
     local wa = c.screen.workarea
-    c:geometry {
-        x      = wa.x + margin_left,
-        y      = wa.y + margin_top,
-        width  = c.width,
-        height = c.height
-    }
+    if not c.fullscreen then
+        c:geometry {
+            x      = wa.x + margin_left,
+            y      = wa.y + margin_top,
+            width  = c.width,
+            height = c.height
+        }
+    end
     c.shape = function(cr, w, h)
         gears.shape.rounded_rect(cr, w, h, 6)
     end
@@ -908,7 +943,15 @@ end)
 beautiful.focus_follows_mouse = false
 beautiful.bg_systray = "#434c5eee"
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
+client.connect_signal("focus", function(c)
+    c.border_color = beautiful.border_focus
+    local screen = c.screen
+    if c.fullscreen then
+        screen.mywibox.ontop = false
+    else
+        screen.mywibox.ontop = true
+    end
+end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
 awful.spawn("wmname 'iamnanokaWM'")
@@ -942,5 +985,16 @@ client.connect_signal("request::geometry", function(c)
         c.shape = function(cr, w, h)
             gears.shape.rounded_rect(cr, w, h, 6)
         end
+    end
+end)
+
+client.connect_signal("property::fullscreen", function(c)
+    local screen = c.screen
+    if c == screen.selected_tag then return end
+
+    if c.fullscreen then
+        screen.mywibox.ontop = false
+    else
+        screen.mywibox.ontop = true
     end
 end)
