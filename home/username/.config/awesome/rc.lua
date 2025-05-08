@@ -190,7 +190,7 @@ awful.screen.connect_for_each_screen(function(s)
         widget = wibox.widget.separator,
         orientation = "vertical",
         forced_width = 6,
-        color = "#000000"
+        color = "#00000000"
     }
 
     local sep_right = wibox.widget {
@@ -203,9 +203,17 @@ awful.screen.connect_for_each_screen(function(s)
 
     local mysystray = wibox.widget {
         wibox.widget.systray(),
-        margins = 2,
+        left = 10,
+        right = 10,
+        top = 2,
+        bottom = 2,
         widget = wibox.container.margin
     }
+
+    mysystray = wibox.container.background(mysystray)
+    mysystray.bg = "#434c5e"
+    mysystray.shape = gears.shape.rounded_rect
+    mysystray.shape_clip = true
 
     local window_name = wibox.widget {
         widget = wibox.widget.textbox,
@@ -293,7 +301,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     awful.tooltip {
         objects = { battery_percent_container },
-        text = "Window Name"
+        text = "Battery percent"
     }
 
     timer {
@@ -349,7 +357,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     awful.tooltip {
         objects = { network_status_container },
-        text = "Network Status"
+        text = "Network IP/SSID"
     }
 
     timer {
@@ -938,15 +946,17 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 beautiful.focus_follows_mouse = false
-beautiful.bg_systray = "#434c5eee"
+beautiful.bg_systray = "#434c5e"
 
 client.connect_signal("focus", function(c)
     c.border_color = beautiful.border_focus
     local screen = c.screen
     if c.fullscreen then
         screen.mywibox.ontop = false
+        awful.spawn("dunstctl set-paused true")
     else
         screen.mywibox.ontop = true
+        awful.spawn("dunstctl set-paused false")
     end
 end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
@@ -980,7 +990,7 @@ client.connect_signal("request::geometry", function(c)
             height = math.min(wa.height - margin_top - margin_bottom, c.height)
         }
         c.shape = function(cr, w, h)
-            gears.shape.rounded_rect(cr, w, h, 6)
+            gears.shape.rounded_rect(cr, w, h, 10)
         end
     end
 end)
