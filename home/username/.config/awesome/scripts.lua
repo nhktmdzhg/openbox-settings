@@ -33,7 +33,7 @@ function scripts.get_battery_icon()
 
     for line in info_output:gmatch("[^\n]+") do
         if line:find("state:") then
-            _, _, status = line:find("%s*(%w+)")
+            status = line:match("state:%s+(%S+)")
         elseif line:find("percentage:") then
             local percent_str = line:match("(%d+)%%")
             if percent_str then
@@ -88,8 +88,6 @@ function scripts.get_battery_percent()
     end
 
     local info_output = get_output_of_cmd("upower -i " .. battery_device)
-
-    local percentage
 
     for line in info_output:gmatch("[^\n]+") do
         if line:find("percentage:") then
